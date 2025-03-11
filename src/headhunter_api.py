@@ -38,6 +38,7 @@ class HeadHunterAPI(Parser):
             return None
 
     def get_vacancies(self, keyword: str) -> list[dict]:
+        """Получение списка вакансий с hh.ru"""
         logger.info(f"Поиск вакансий по ключевому слову: {keyword}")
         self.__params['text'] = keyword
         self.__params['page'] = 0
