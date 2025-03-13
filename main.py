@@ -2,7 +2,10 @@ import pprint
 
 from src.headhunter_api import HeadHunterAPI
 import json
+
+from src.json_saver import JSONSaver
 from src.vacancy import Vacancy
+from config import PATH_TO_JSON_DATA
 
 
 # Создание экземпляра класса для работы с API сайтов с вакансиями
@@ -46,6 +49,16 @@ def user_interaction():
     print(vacancies_list[0].salary_from)
     print(vacancies_list[0].salary_to)
     pprint.pprint(vacancies_list[0].description, width=80)
+
+
+    vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", 100000, 150000, "Требования: опыт работы от 3 лет...")
+    json_saver = JSONSaver()
+
+    json_saver.add_vacancy(vacancies_list[0:4])
+    json_saver.add_vacancy(vacancy)
+    json_saver.delete_vacancy(vacancies_list[0:2])
+    json_saver.delete_vacancy(vacancy)
+    #
     #
     # filtered_vacancies = filter_vacancies(vacancies_list, filter_words)
     #

@@ -35,6 +35,16 @@ class Vacancy:
     def __eq__(self, other):
         return (self.salary_from or self.salary_to) == (other.salary_from or other.salary_to)
 
+    def to_dict(self) -> dict:
+        """Метод для преобразования объекта вакансии в словарь"""
+        return {
+            "title": self.title,
+            "url": self.url,
+            "salary_from": self.salary_from,
+            "salary_to": self.salary_to,
+            "description": self.description
+        }
+
     @staticmethod
     def __validate_salary(salary: int) -> int:
         """Проверяет корректность зарплаты"""
