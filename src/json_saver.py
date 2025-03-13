@@ -1,12 +1,11 @@
 import json
-import os.path
 import logging
+import os.path
 from typing import Any
 
+from config import PATH_TO_JSON_DATA
 from src.saver import Saver
 from src.vacancy import Vacancy
-from config import PATH_TO_JSON_DATA
-
 
 logger = logging.getLogger("json_saver")
 file_handler = logging.FileHandler(
@@ -21,7 +20,7 @@ logger.setLevel(logging.DEBUG)
 class JSONSaver(Saver):
     """Класс для сохранения вакансий в JSON-файл"""
 
-    def __init__(self, filename: str = PATH_TO_JSON_DATA) -> None:
+    def __init__(self, filename: Any = PATH_TO_JSON_DATA) -> None:
         self.__filename = filename
 
     def add_vacancy(self, vacancies: Vacancy | list[Vacancy]) -> None:
@@ -58,8 +57,13 @@ class JSONSaver(Saver):
         """Загрузка данных из JSON-файла"""
         if os.path.exists(self.__filename):
             try:
-                with open(self.__filename, 'r', encoding='utf-8') as file:
-                    return json.load(file)
+                with open(self.__filename, "r", encoding="utf-8") as file:
+                    data = json.load(file)
+                    if isinstance(data, list):
+                        return data
+                    else:
+                        logger.warning("Файл содержит данные неверного формата, возвращен пустой список.")
+                        return []
             except json.JSONDecodeError:
                 logger.warning("Файл поврежден или пуст, возвращен пустой список.")
                 return []
@@ -67,5 +71,5 @@ class JSONSaver(Saver):
 
     def _save_to_file(self, vacancies: list[dict]) -> None:
         """Сохранение данных в JSON-файл"""
-        with open(self.__filename, 'w', encoding='utf-8') as file:
+        with open(self.__filename, "w", encoding="utf-8") as file:
             json.dump(vacancies, file, ensure_ascii=False, indent=4)

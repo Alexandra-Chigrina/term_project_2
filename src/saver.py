@@ -5,10 +5,10 @@ from src.vacancy import Vacancy
 
 
 class Saver(ABC):
-    """ Абстрактный класс для работы с файлами"""
+    """Абстрактный класс для работы с файлами"""
 
     @abstractmethod
-    def add_vacancy(self, vacancy: Vacancy):
+    def add_vacancy(self, vacancy: Vacancy) -> None:
         pass
 
     @abstractmethod
@@ -16,5 +16,5 @@ class Saver(ABC):
         pass
 
     @abstractmethod
-    def delete_vacancy(self, vacancy: Vacancy) -> list[Vacancy]:
+    def delete_vacancy(self, vacancy: Vacancy) -> None:
         pass

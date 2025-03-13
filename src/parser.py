@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from requests import Response
+
 
 class Parser(ABC):
     """
@@ -7,7 +9,7 @@ class Parser(ABC):
     """
 
     @abstractmethod
-    def _connect_to_api(self) -> None:
+    def _connect_to_api(self) -> Response | None:
         """Подключение к API (абстрактный метод)"""
         pass
 
