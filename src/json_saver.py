@@ -38,8 +38,7 @@ class JSONSaver(Saver):
 
     def get_vacancies_data(self, criteria: Any) -> list[Vacancy]:
         """Получение вакансий по критериям (заглушка)"""
-        logger.info("Метод get_vacancies пока не реализован.")
-        return []
+        pass
 
     def delete_vacancy(self, vacancies: Vacancy | list[Vacancy]) -> None:
         """Удаление одной или нескольких вакансий из JSON-файла"""

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from requests import Response
 
 
-class Parser(ABC):
+class Parser(ABC):  # pragma: no cover
     """
     Абстрактный класс для работы с API сервиса с вакансиями
     """

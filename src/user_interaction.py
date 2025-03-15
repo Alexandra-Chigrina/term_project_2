@@ -42,4 +42,5 @@ def user_interaction() -> None:
     top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
 
     logger.info(f"Выведено {len(top_vacancies)} топ-вакансий пользователю")
-    return print_vacancies(top_vacancies)
+    print_vacancies(top_vacancies)
+    return

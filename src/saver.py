@@ -4,7 +4,7 @@ from typing import Any
 from src.vacancy import Vacancy
 
 
-class Saver(ABC):
+class Saver(ABC):  # pragma: no cover
     """Абстрактный класс для работы с файлами"""
 
     @abstractmethod
