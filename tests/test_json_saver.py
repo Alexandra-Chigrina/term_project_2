@@ -1,10 +1,8 @@
 import json
-from unittest.mock import patch, mock_open
-import pytest
-from src.json_saver import JSONSaver
+from unittest.mock import mock_open, patch
+
 from config import PATH_TO_JSON_DATA
-from src.vacancy import Vacancy
-from unittest.mock import Mock, patch
+from src.json_saver import JSONSaver
 
 
 def test_json_saver_init():
@@ -18,8 +16,9 @@ def test_json_saver_init():
 
 def test_load_from_file(vacancy_json):
     mock_data = json.dumps(vacancy_json)
-    with patch("os.path.exists", return_value=True), \
-        patch("builtins.open", mock_open(read_data=mock_data)) as mock_file:
+    with patch("os.path.exists", return_value=True), patch(
+        "builtins.open", mock_open(read_data=mock_data)
+    ) as mock_file:
         saver = JSONSaver("test_file.json")
         loaded_vacancies = saver._load_from_file()
     assert loaded_vacancies == vacancy_json
@@ -28,31 +27,31 @@ def test_load_from_file(vacancy_json):
 
 def test_load_from_file_incorrect_data():
     mock_data = json.dumps({"invalid": "data"})
-    with patch("os.path.exists", return_value=True), \
-        patch("builtins.open", mock_open(read_data=mock_data)) as mock_file:
+    with patch("os.path.exists", return_value=True), patch(
+        "builtins.open", mock_open(read_data=mock_data)
+    ):
         saver = JSONSaver("test_file.json")
         loaded_vacancies = saver._load_from_file()
     assert loaded_vacancies == []
 
 
 def test_load_from_file_error():
-    with patch("os.path.exists", return_value=True), \
-        patch("builtins.open", mock_open(read_data="{invalid json}")), \
-        patch("json.load", side_effect=json.JSONDecodeError("Expecting value", doc="", pos=0)):
+    with patch("os.path.exists", return_value=True), patch(
+        "builtins.open", mock_open(read_data="{invalid json}")
+    ), patch("json.load", side_effect=json.JSONDecodeError("Expecting value", doc="", pos=0)):
         saver = JSONSaver("test_file.json")
         loaded_vacancies = saver._load_from_file()
     assert loaded_vacancies == []
 
 
 def test_load_from_file_not_exists():
-    with patch("os.path.exists", return_value=False)    :
+    with patch("os.path.exists", return_value=False):
         saver = JSONSaver("test_file.json")
         loaded_vacancies = saver._load_from_file()
     assert loaded_vacancies == []
 
 
 def test_save_to_file(vacancy_json):
-    mock_data = json.dumps(vacancy_json, ensure_ascii=False, indent=4)
     with patch("builtins.open", mock_open()) as mock_file:
         saver = JSONSaver("test_file.json")
         saver._save_to_file(vacancy_json)
@@ -61,8 +60,9 @@ def test_save_to_file(vacancy_json):
 
 
 def test_add_vacancy_new(first_vacancy):
-    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[]), \
-            patch("src.json_saver.JSONSaver._save_to_file") as mock_save:
+    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[]), patch(
+        "src.json_saver.JSONSaver._save_to_file"
+    ) as mock_save:
         saver = JSONSaver("test_file.json")
         saver.add_vacancy(first_vacancy)
 
@@ -70,8 +70,9 @@ def test_add_vacancy_new(first_vacancy):
 
 
 def test_add_vacancy_existing(first_vacancy):
-    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[first_vacancy.to_dict()]), \
-            patch("src.json_saver.JSONSaver._save_to_file") as mock_save:
+    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[first_vacancy.to_dict()]), patch(
+        "src.json_saver.JSONSaver._save_to_file"
+    ) as mock_save:
         saver = JSONSaver("test_file.json")
         saver.add_vacancy(first_vacancy)
 
@@ -79,8 +80,9 @@ def test_add_vacancy_existing(first_vacancy):
 
 
 def test_delete_vacancy_existing(second_vacancy):
-    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[second_vacancy.to_dict()]), \
-        patch("src.json_saver.JSONSaver._save_to_file") as mock_save:
+    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[second_vacancy.to_dict()]), patch(
+        "src.json_saver.JSONSaver._save_to_file"
+    ) as mock_save:
 
         saver = JSONSaver("test_file.json")
         saver.delete_vacancy(second_vacancy)
@@ -89,8 +91,9 @@ def test_delete_vacancy_existing(second_vacancy):
 
 
 def test_delete_vacancy_not_found(first_vacancy, second_vacancy):
-    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[second_vacancy.to_dict()]), \
-        patch("src.json_saver.JSONSaver._save_to_file") as mock_save:
+    with patch("src.json_saver.JSONSaver._load_from_file", return_value=[second_vacancy.to_dict()]), patch(
+        "src.json_saver.JSONSaver._save_to_file"
+    ) as mock_save:
 
         saver = JSONSaver("test_file.json")
         saver.delete_vacancy(first_vacancy)

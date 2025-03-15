@@ -1,4 +1,4 @@
-from src.utils import filter_vacancies, get_top_vacancies, get_vacancies_by_salary, sort_vacancies, print_vacancies
+from src.utils import filter_vacancies, get_top_vacancies, get_vacancies_by_salary, print_vacancies, sort_vacancies
 
 
 def test_filter_vacancies(vacancies):

@@ -43,7 +43,8 @@ def vacancy_json():
             "alternate_url": "https://hh.ru/vacancy/118263819",
             "salary": {"from": 50000, "to": 70000},
             "snippet": {
-                "requirement": "Знание одного из объектно-ориентированного языка программирования: C++\\C#, Delphi, Python"
+                "requirement": "Знание одного из объектно-ориентированного языка программирования: "
+                               "C++\\C#, Delphi, Python"
             },
         },
         {
